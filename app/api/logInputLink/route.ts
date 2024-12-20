@@ -42,8 +42,9 @@ export async function POST(req: Request) {
 
     const downloadLink = document.createElement('a');
             downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = 'video.mp4'; // Suggest a filename
+            downloadLink.download = 'downloaded_video.mp4'; // Suggest a filename
             downloadLink.click();
+
 
     return NextResponse.json({ message: "Link logged succesfully" });
   } catch (error) {

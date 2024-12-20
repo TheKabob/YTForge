@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
 
   const videoUrl = searchParams.get("url");
-  const fileName = "downloaded_video.webm";
+  const fileName = "downloaded_video.mp4";
 
   if (!videoUrl) {
     return NextResponse.json(
@@ -34,8 +34,8 @@ export async function GET(req: NextRequest) {
         reject(err);
       });
     });
-    const videoData = readFileSync(`${fileName}.mp4`);
-    unlinkSync(`${fileName}.mp4`);
+    const videoData = readFileSync(fileName);
+    unlinkSync(fileName);
     return new NextResponse(videoData, {
       status: 200,
       headers: {

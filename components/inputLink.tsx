@@ -20,12 +20,12 @@ export default function InputLink() {
         e.preventDefault();
         
         try {
-          const response = await fetch("/api/logInputLink", {
-            method: 'POST',
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ link }),
+          const response = await fetch(`/api/logInputLink`, {
+            method: 'GET',
+            // headers: {
+            //   "Content-Type": "application/json"
+            // },
+            // body: JSON.stringify({ link }),
           });
 
           const data = await response.json();
