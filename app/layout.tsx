@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     description: "A YTMP4 Web App that works, no ads, nothing extra, Just YTMP4.",
   },
+  description: "A YTMP4 Web App that works, no ads, nothing extra, Just YTMP4.",
   metadataBase: new URL("https://yt-forge.vercel.app/"),
   keywords: ["YTForge", "YTMP4", "youtube to mp4", "ytmp4", "y2mp4", "yt-forge", "youtube forge"],
 };
