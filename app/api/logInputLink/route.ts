@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/client";
 import { getYoutubeTitle } from "./getYoutubeTitle";
 
-export async function POST(req: Request) {
+export default async function POST(req: Request) {
   try {
     const { link } = await req.json();
     const youtubeTitle = await getYoutubeTitle(link);
