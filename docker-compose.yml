@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: zairysbigtae
+      POSTGRES_PASSWORD: zai
+      POSTGRES_DB: yt_forge
+
+  adminer:
+    image: adminer 
+    restart: always 
+    ports: 
+      - 5432:5432
