@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getYoutubeTitle } from "@/app/api/logInputLink/route";
+import { getYoutubeTitle } from "@/app/api/logInputLink/getYoutubeTitle";
 
 export default function InputLink() {
   const [link, setLink] = useState("");
