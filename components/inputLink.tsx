@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { getYoutubeTitle } from "@/app/api/logInputLink/route";
 
 export default function InputLink() {
   const [link, setLink] = useState("");
+  const [youtubeTitle, setYoutubeTitle] = useState("");
   // const [videoUrl, setVideoUrl] = useState("");
 
   // const handleDownload = async (e) => {
@@ -37,14 +39,11 @@ export default function InputLink() {
               // Clean up the object URL
               URL.revokeObjectURL(downloadLink.href);
 
-          const result = await response.json();
           if (response.ok) { 
-            const youtubeTitle = document.getElementById('youtubeTitle');
-            if(youtubeTitle) { 
-              youtubeTitle.textContent = `Video Title: ${result.youtubeTitle}`;
-            }
+            setYoutubeTitle(`Title: ${await getYoutubeTitle(link)}`);
+            console.log(`Title: ${await getYoutubeTitle(link)}`);
           } else {
-            console.error('Error: ', result.message);
+            console.error('an error occured');
           }
         } catch (error) {
           console.log("Error sending link to server", error);
@@ -52,8 +51,7 @@ export default function InputLink() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen grid-cols gap-4 content-around">
-      <p id="youtubeTitle">placeholder</p><br/>
+    <div className="flex justify-center items-center h-screen grid-cols gap-4 flex-col">
       <form onSubmit={handleOnSubmit} className="flex flex-col items-center gap-2 w-full max-w-md px-4">
         <input id="link" name="link" value={link} onChange={(e) => {
           setLink(e.target.value);
@@ -61,7 +59,8 @@ export default function InputLink() {
         className="outline-none rounded-md text-slate-900 font-semibold w-full border-double border-4 border-blue-100"/>
         <button type="submit"
           className="bg-blue-200 rounded-md px-2 font-bold text-slate-900 border-double border-4 border-blue-100">Download</button>
-      </form>
+      </form> 
+      <p id="youtubeTitle" className="text-white font-semibold">{youtubeTitle || 'Video Title goes here! (will appear once downloaded)'}</p><br/>
       {/* <form onSubmit={handleDownload}>
         <button type="submit"
           className="bg-slate-400 rounded-md px-2 font-bold text-slate-900"

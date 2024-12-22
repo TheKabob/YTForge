@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/client";
 import axios from 'axios';
 
-const getYoutubeTitle = async (url: string): Promise<string | null> => {
+export async function getYoutubeTitle(url: string): Promise<string | null> {
   const videoId = new URL(url).searchParams.get('v');
   const apiKey = "AIzaSyBmxIE32sHKSBHuNTcy88gQCcecUnkflqM";
   const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
@@ -15,7 +15,7 @@ const getYoutubeTitle = async (url: string): Promise<string | null> => {
     console.error("Error fetching the Youtube title: ", error);
     return null;
   }
-};
+}
 
 export async function POST(req: Request) {
   try {
@@ -38,16 +38,17 @@ export async function POST(req: Request) {
     });
     
     const data = await response.arrayBuffer();
+    // const responseData = { 
+    //   message: "Link logged successfully",
+    //   youtubeTitle: youtubeTitle || "No title available"
+    // };
 
-    await NextResponse.json({message: " Link logged succesfully "});
-    return (
-      new Response(data, {
-          headers: {
-            'Content-Type': 'application/octet-stream',
-            'Content-Disposition': 'attachment; filename="downloaded_video.mp4"',
-          }
-        })
-      );
+    return new NextResponse(data, {
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': 'attachment; filename="downloaded_video.mp4"',
+      }
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -56,3 +57,7 @@ export async function POST(req: Request) {
     );
   }
 }
+
+// module.exports = {
+//   getYoutubeTitle: getYoutubeTitle,
+// }
