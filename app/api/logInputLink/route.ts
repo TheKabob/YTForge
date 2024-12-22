@@ -30,23 +30,24 @@ export async function POST(req: Request) {
       }
     });
 
-    const response = await fetch(
-      `/api/download?url=${link}`,
-      {
-        method: 'GET',
-        // 'Content-Disposition': 'attachment; filename="video.mp4"',
-      });
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'; // Adjust as necessary for your environment
+    const apiUrl = new URL(`/api/download?url=${encodeURIComponent(link)}`, baseUrl);
 
+    const response = await fetch(apiUrl.toString(), {
+      method: 'GET',
+    });
     
-    const blob = await response.blob();
+    const data = await response.arrayBuffer();
 
-    const downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = 'downloaded_video.mp4'; // Suggest a filename
-            downloadLink.click();
-
-
-    return NextResponse.json({ message: "Link logged succesfully" });
+    await NextResponse.json({message: " Link logged succesfully "});
+    return (
+      new Response(data, {
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'Content-Disposition': 'attachment; filename="downloaded_video.mp4"',
+          }
+        })
+      );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
