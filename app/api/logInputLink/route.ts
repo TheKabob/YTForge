@@ -44,7 +44,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function getYoutubeTitle(url: string): Promise<string | null> {
+export const getYoutubeTitle = async (url: string): Promise<string | null> => {
   const videoId = new URL(url).searchParams.get('v');
   const apiKey = "AIzaSyBmxIE32sHKSBHuNTcy88gQCcecUnkflqM";
   const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
